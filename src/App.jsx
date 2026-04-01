@@ -5,15 +5,28 @@ import Login from "./page/Login";
 import ProductAll from "./page/ProductAll";
 import ProductDetail from "./page/ProductDetail";
 import Navbar from "./components/Navbar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import PrivateRoute from "./route/PrivateRoute";
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+  console.log(authenticated);
   return (
     <div>
-      <Navbar />
+      <Navbar
+        authenticated={authenticated}
+        setAuthenticated={setAuthenticated}
+      />
       <Routes>
         <Route path="/" element={<ProductAll />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route
+          path="/login"
+          element={<Login setAuthenticated={setAuthenticated} />}
+        />
+        <Route
+          path="/product/:id"
+          element={<PrivateRoute authenticated={authenticated} />}
+        />
       </Routes>
     </div>
   );

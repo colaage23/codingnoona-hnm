@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductCard from "./ProductCard";
+import { Col, Container, Row } from "react-bootstrap";
 
 const ProductAll = () => {
   const navigate = useNavigate();
@@ -10,7 +11,10 @@ const ProductAll = () => {
     const url = "http://localhost:5000/products";
     const response = await fetch(url);
     const data = await response.json();
-    setProductList(data);
+    const sorted = [...data].sort(
+      (a, b) => (b.choice ? 1 : 0) - (a.choice ? 1 : 0),
+    );
+    setProductList(sorted);
   };
 
   useEffect(() => {
@@ -19,7 +23,15 @@ const ProductAll = () => {
 
   return (
     <div className="product-list">
-      <ProductCard />
+      <Container>
+        <Row>
+          {productList.map((product) => (
+            <Col key={product.id} lg={3}>
+              <ProductCard product={product} />
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </div>
   );
 };
