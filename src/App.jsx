@@ -10,7 +10,6 @@ import PrivateRoute from "./route/PrivateRoute";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
-  console.log(authenticated);
   return (
     <div>
       <Navbar
